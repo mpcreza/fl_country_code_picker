@@ -158,24 +158,27 @@ class _CountryCodePickerModalState extends State<CountryCodePickerModal> {
             ),
           ),
         Expanded(
-          child: ScrollablePositionedList.builder(
-            itemScrollController: itemScrollController,
-            itemCount: availableCountryCodes.length,
-            itemBuilder: (context, index) {
-              final code = availableCountryCodes[index];
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: ScrollablePositionedList.builder(
+              itemScrollController: itemScrollController,
+              itemCount: availableCountryCodes.length,
+              itemBuilder: (context, index) {
+                final code = availableCountryCodes[index];
 
-              return ListTile(
-                onTap: () => Navigator.pop(context, code),
-                leading: code.flagImage,
-                title: Text(code.name),
-                trailing: _ListTrailing(
-                  code: code,
-                  favorites: widget.favorites,
-                  icon: widget.favoritesIcon,
-                  showDialCode: widget.showDialCode,
-                ),
-              );
-            },
+                return ListTile(
+                  onTap: () => Navigator.pop(context, code),
+                  leading: code.flagImage,
+                  title: Text(code.name),
+                  trailing: _ListTrailing(
+                    code: code,
+                    favorites: widget.favorites,
+                    icon: widget.favoritesIcon,
+                    showDialCode: widget.showDialCode,
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ],
