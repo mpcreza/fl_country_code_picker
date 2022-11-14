@@ -19,6 +19,8 @@ class CountryCodePickerModal extends StatefulWidget {
     required this.showSearchBar,
     required this.showDialCode,
     this.focusedCountry,
+    this.title,
+    this.searchHint,
   }) : super(key: key);
 
   /// {@macro favorites}
@@ -38,6 +40,12 @@ class CountryCodePickerModal extends StatefulWidget {
 
   /// If not null, automatically scrolls the list view to this country.
   final String? focusedCountry;
+
+  /// title of code picker
+  final String? title;
+
+  /// Search hint text
+  final String? searchHint;
 
   @override
   State<CountryCodePickerModal> createState() => _CountryCodePickerModalState();
@@ -106,17 +114,18 @@ class _CountryCodePickerModalState extends State<CountryCodePickerModal> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _ModalTitle(),
+        _ModalTitle(title: widget.title),
         if (widget.showSearchBar)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TextField(
               keyboardType: TextInputType.text,
-              decoration: const InputDecoration(
-                hintText: "'Country', 'Code' or 'Dial Code'",
-                hintStyle: TextStyle(fontSize: 12),
-                suffixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
+              decoration: InputDecoration(
+                hintText:
+                    widget.searchHint ?? "'Country', 'Code' or 'Dial Code'",
+                hintStyle: const TextStyle(fontSize: 12),
+                suffixIcon: const Icon(Icons.search),
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(kBorderRadius),
                   borderSide: BorderSide(
                     width: 2,
@@ -124,7 +133,7 @@ class _CountryCodePickerModalState extends State<CountryCodePickerModal> {
                   ),
                 ),
                 filled: true,
-                contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                 fillColor: Colors.white,
               ),
               onChanged: (query) {
@@ -209,15 +218,20 @@ class _ListTrailing extends StatelessWidget {
 }
 
 class _ModalTitle extends StatelessWidget {
-  const _ModalTitle({Key? key}) : super(key: key);
+  const _ModalTitle({
+    Key? key,
+    this.title,
+  }) : super(key: key);
+
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(16),
+    return Padding(
+      padding: const EdgeInsets.all(16),
       child: Text(
-        'Select your country',
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        title ?? 'Select your country',
+        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
     );
   }

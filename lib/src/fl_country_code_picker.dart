@@ -97,6 +97,8 @@ class FlCountryCodePicker {
     double pickerMaxHeight = 500,
     bool scrollToDeviceLocale = false,
     String? initialSelectedLocale,
+    String? title,
+    String? searchHint,
   }) async {
     // Computations for modal height.
     final fullScreenHeight = MediaQuery.of(context).size.height;
@@ -129,6 +131,8 @@ class FlCountryCodePicker {
         showSearchBar: showSearchBar,
         showDialCode: showDialCode,
         focusedCountry: scrollToDeviceLocale ? locale : initialSelectedLocale,
+        title: title,
+        searchHint: searchHint,
       ),
     );
 
